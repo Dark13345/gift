@@ -1,0 +1,41 @@
+# Каждые 15 минут в часы работы биржи США берёт свежие цены акций и обновляет prices.json.
+# Сайт читает этот файл и сам обновляет карточки. Запустить вручную: вкладка Actions ->
+# «Обновить цены акций» -> Run workflow.
+name: Обновить цены акций
+
+on:
+  schedule:
+    # пн-пт, 13:00-21:59 UTC = 16:00-00:59 МСК (торги в США + запас на летнее/зимнее время)
+    - cron: '*/15 13-21 * * 1-5'
+    # раз в день в выходные и ночью — на случай, если в торговые часы GitHub пропустил запуск
+    - cron: '30 23 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prices
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Скачать цены
+        run: python update_prices.py
+      - name: Сохранить, если цены изменились
+        run: |
+          git config user.name "prices-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add prices.json
+          if git diff --cached --quiet -I '"updated"'; then
+            echo "Цены не изменились"
+          else
+            git commit -m "Обновлены цены акций"
+            git push
+          fi
