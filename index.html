@@ -161,7 +161,7 @@
     @media (prefers-reduced-motion: reduce) { .hero-img, .hero-glow { animation: none; } }
 
     /* portfolio builder */
-    .builder { padding-top: 8px; padding-bottom: 84px; }
+    .builder { padding-top: 8px; padding-bottom: 48px; }
     .builder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
     .col { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; box-shadow: var(--shadow-md); }
     .col-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
@@ -287,7 +287,7 @@
     .over-budget { color: var(--danger) !important; }
 
     /* section */
-    section { padding: 78px 0; }
+    section { padding: 48px 0; }
     .sec-head { max-width: 620px; margin-bottom: 44px; }
     h2 { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; margin-bottom: 14px; }
     .sec-head p { font-size: 17px; color: var(--ink-dim); }
@@ -400,7 +400,8 @@
         h1 { font-size: 38px; }
 
         /* --- mobile portfolio builder: horizontal cards on top, drop below --- */
-        .builder { padding-bottom: 48px; }
+        .builder { padding-bottom: 24px; }
+        section { padding: 30px 0; }
         .builder-grid { grid-template-columns: 1fr; gap: 12px; align-items: stretch; }
         .col { padding: 14px; min-width: 0; overflow: hidden; }
         .col-head { margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
@@ -461,8 +462,8 @@
     }
 
     /* «С нами зарабатывают с 1996 года!» — как на goldentime.npbmarket-promoru.nl */
-    .gt-trust { background: #fff; box-shadow: 0 0 0 100vmax #fff; clip-path: inset(0 -100vmax); padding: 110px 0 80px; color: #000; }
-    .gt-title { font-family: 'Montserrat', 'Spline Sans', sans-serif; font-weight: 800; font-size: 40px; line-height: 49px; text-align: center; letter-spacing: 0; margin: 0 auto 146px; max-width: 786px; }
+    .gt-trust { background: #fff; box-shadow: 0 0 0 100vmax #fff; clip-path: inset(0 -100vmax); padding: 56px 0 48px; color: #000; }
+    .gt-title { font-family: 'Montserrat', 'Spline Sans', sans-serif; font-weight: 800; font-size: 40px; line-height: 49px; text-align: center; letter-spacing: 0; margin: 0 auto 72px; max-width: 786px; }
     /* сетка шире обычной колонки сайта — как у оригинала (1216px), колонки 447/377/392 */
     .gt-grid { display: grid; grid-template-columns: 447fr 377fr 392fr; row-gap: 88px; width: min(1216px, calc(100vw - 48px)); position: relative; left: 50%; transform: translateX(-50%); }
     .gt-item { display: flex; flex-direction: column; align-items: flex-start; font-family: 'Roboto', 'Spline Sans', sans-serif; }
@@ -473,21 +474,23 @@
     .gt-item:nth-child(5) p { max-width: 352px; }
     .gt-item:nth-child(3n) p { max-width: 312px; }
     @media (max-width: 900px) {
-        .gt-trust { padding: 72px 0 56px; }
-        .gt-title { font-size: 30px; line-height: 38px; margin-bottom: 64px; }
-        .gt-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 56px; column-gap: 24px; }
+        .gt-trust { padding: 32px 0 28px; }
+        .gt-title { font-size: 30px; line-height: 38px; margin-bottom: 36px; }
+        .gt-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; column-gap: 24px; }
     }
     @media (max-width: 600px) {
-        .gt-title { font-size: 26px; line-height: 32px; margin-bottom: 44px; }
-        .gt-grid { grid-template-columns: minmax(0, 1fr); row-gap: 44px; }
+        .gt-title { font-size: 26px; line-height: 32px; margin-bottom: 28px; }
+        .gt-grid { grid-template-columns: minmax(0, 1fr); row-gap: 32px; }
+        .gt-item { align-items: center; text-align: center; }
+        .gt-item p, .gt-item:nth-child(n) p { max-width: 340px; margin-left: auto; margin-right: auto; }
         .gt-ic { margin-bottom: 20px; }
         .gt-item h3 { font-size: 22px; line-height: 26px; }
         .gt-item p { font-size: 16px; line-height: 22px; }
     }
 
     /* «Награды» — как на goldentime: две ленты-картинки едут туда-обратно за 120 с, при наведении стоят */
-    .gt-awards { background: #fff; box-shadow: 0 0 0 100vmax #fff; clip-path: inset(0 -100vmax); padding: 96px 0 80px; }
-    .gt-aw-title { font-family: 'Montserrat', 'Spline Sans', sans-serif; font-weight: 800; font-size: 40px; line-height: 60px; letter-spacing: 0; color: #000; margin: 0 0 48px;
+    .gt-awards { background: #fff; box-shadow: 0 0 0 100vmax #fff; clip-path: inset(0 -100vmax); padding: 28px 0 40px; }
+    .gt-aw-title { font-family: 'Montserrat', 'Spline Sans', sans-serif; font-weight: 800; font-size: 40px; line-height: 60px; letter-spacing: 0; color: #000; margin: 0 0 32px;
                    width: min(1216px, calc(100vw - 48px)); position: relative; left: 50%; transform: translateX(-50%); }
     .gt-aw-strip { width: 100vw; position: relative; left: 50%; transform: translateX(-50%); overflow: hidden; }
     .gt-aw-track { display: flex; align-items: center; width: max-content; gap: 32px; padding-right: 32px; animation: gt-aw-move 120s linear .2s infinite; }
@@ -495,10 +498,10 @@
     .gt-aw-strip:hover .gt-aw-track { animation-play-state: paused; }
     @keyframes gt-aw-move { 0% { transform: translateX(0); } 50% { transform: translateX(calc(-100% + 100vw)); } 100% { transform: translateX(0); } }
     @media (prefers-reduced-motion: reduce) { .gt-aw-track { animation: none; } .gt-aw-strip { overflow-x: auto; } }
-    @media (max-width: 600px) { .gt-awards { padding: 64px 0 56px; } .gt-aw-title { font-size: 30px; line-height: 40px; margin-bottom: 32px; } .gt-aw-track img { height: 180px; } }
+    @media (max-width: 600px) { .gt-awards { padding: 8px 0 24px; } .gt-aw-title { font-size: 30px; line-height: 40px; margin-bottom: 20px; } .gt-aw-track img { height: 180px; } }
 
     /* подвал — как на welcome500 */
-    .w5-foot { background: #fff; padding: 50px 0 35px; font-family: 'Roboto', 'Spline Sans', sans-serif; font-size: 14px; color: #6b7280; }
+    .w5-foot { background: #fff; padding: 8px 0 35px; font-family: 'Roboto', 'Spline Sans', sans-serif; font-size: 14px; color: #6b7280; }
     .w5-in { width: min(1216px, calc(100% - 48px)); margin: 0 auto; }
     .w5-top { border-top: 1px solid rgba(119, 120, 122, .29); padding-top: 49px; display: flex; align-items: center; justify-content: space-between; }
     .w5-logo img { display: block; width: 136px; height: auto; }
@@ -515,6 +518,7 @@
     @media (max-width: 1279px) {
         .w5-top { flex-direction: column; gap: 56px; }
         .w5-socs { justify-content: center; }
+        .w5-logo { align-self: flex-start; }
         .w5-legal { padding-top: 56px; }
         .w5-bottom { flex-direction: column; align-items: flex-start; gap: 14px; }
     }
