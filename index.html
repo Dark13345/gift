@@ -30,9 +30,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
     :root {
-        --bg: #eef1f4;
-        --panel: #ffffff;
-        --panel-2: #f4f7f9;
+        --bg: #ffffff;
+        --panel: #f5f7f9;
+        --panel-2: #ffffff;
         --line: #d3dae2;
         --line-soft: #dfe5eb;
         --ink: #0a0d10;
@@ -51,7 +51,7 @@
     /* форс светлой темы: не даём браузерному «force dark» перекрашивать */
     @media (prefers-color-scheme: dark) {
         :root {
-            --bg: #eef1f4; --panel: #ffffff; --panel-2: #f4f7f9;
+            --bg: #ffffff; --panel: #f5f7f9; --panel-2: #ffffff;
             --line: #d3dae2; --line-soft: #dfe5eb;
             --ink: #0a0d10; --ink-dim: #4a5560; --ink-faint: #8894a0;
             --up: #009b7a; --up-soft: rgba(0,155,122,0.12);
@@ -163,7 +163,7 @@
     /* portfolio builder */
     .builder { padding-top: 8px; padding-bottom: 48px; }
     .builder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
-    .col { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; box-shadow: var(--shadow-md); }
+    .col { background: var(--panel); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; }
     .col-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
     .col-title { font-size: 15px; font-weight: 600; }
     .col-hint { font-size: 12.5px; color: var(--ink-faint); }
@@ -181,12 +181,11 @@
     .stock {
         display: grid; grid-template-columns: 38px 1fr 56px auto auto; gap: 12px;
         align-items: center; padding: 11px 14px;
-        background: var(--panel); border: 1px solid var(--line);
+        background: #fff;
         border-radius: 11px; cursor: grab; user-select: none;
-        box-shadow: var(--shadow-sm);
         transition: border-color .15s, transform .18s cubic-bezier(.2,.8,.3,1), box-shadow .15s, opacity .15s;
     }
-    .stock:hover { border-color: var(--gold); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+    .stock:hover { box-shadow: 0 0 0 1.5px var(--gold); transform: translateY(-1px); }
     .stock:active { cursor: grabbing; }
     .stock.dragging { opacity: .35; box-shadow: none; }
     .stock.shift-down { transform: translateY(64px); }
@@ -211,6 +210,7 @@
     .stock.disabled:hover::before { opacity: 1; }
     /* custom drag ghost */
     .drag-ghost {
+        background: #fff;
         position: fixed; z-index: 9999; pointer-events: none;
         width: 260px; background: var(--panel); border: 1px solid var(--gold); border-radius: 11px;
         box-shadow: var(--shadow-lg); padding: 11px 14px;
@@ -293,18 +293,17 @@
     .sec-head p { font-size: 17px; color: var(--ink-dim); }
 
     /* how it works — process rail */
-    .rail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-md); }
-    .rail-step { background: var(--panel); padding: 30px 26px; }
+    .rail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .rail-step { background: var(--panel); border-radius: 14px; padding: 30px 26px; }
     .rail-step .n { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--gold); margin-bottom: 18px; }
     .rail-step h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
     .rail-step p { font-size: 13.5px; color: var(--ink-dim); line-height: 1.55; }
 
     /* tiers */
     .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .tier { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 30px 26px; position: relative; box-shadow: var(--shadow-md); transition: transform .15s, box-shadow .15s; }
-    .tier:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-    .tier.feat { border-color: var(--gold); border-width: 2px; background: linear-gradient(180deg, var(--gold-soft), transparent 60%), var(--panel); box-shadow: 0 12px 32px -8px rgba(0, 155, 122, 0.25); }
-    .tier.feat:hover { box-shadow: 0 16px 40px -8px rgba(0, 155, 122, 0.3); }
+    .tier { background: var(--panel); border-radius: 14px; padding: 30px 26px; position: relative; transition: transform .15s, box-shadow .15s; }
+    .tier:hover { transform: translateY(-3px); }
+    .tier.feat { background: linear-gradient(180deg, var(--gold-soft), transparent 60%), var(--panel); }
     .tier .badge { position: absolute; top: -11px; left: 26px; background: var(--gold); color: #ffffff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.02em; }
     .tier .t-name { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 3px; }
     .tier .t-dep { font-size: 13px; color: var(--ink-faint); margin-bottom: 20px; }
@@ -323,13 +322,13 @@
     .tier li svg { flex-shrink: 0; margin-top: 3px; color: var(--up); }
 
     /* mechanics / withdraw */
-    .mech { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 46px; }
+    .mech { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center; background: var(--panel); border-radius: 16px; padding: 46px; }
     .mech h2 { font-size: 30px; }
     .mech p { font-size: 16px; color: var(--ink-dim); margin-bottom: 22px; max-width: 440px; }
     .mech ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
     .mech li { display: flex; gap: 12px; font-size: 15px; }
     .mech li svg { flex-shrink: 0; color: var(--gold); margin-top: 2px; }
-    .progress-card { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 26px; }
+    .progress-card { background: var(--panel-2); border-radius: 12px; padding: 26px; }
     .progress-card .pc-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
     .progress-card .pc-top .k { font-size: 13px; color: var(--ink-dim); }
     .progress-card .pc-top .v { font-size: 22px; font-weight: 700; }
@@ -339,7 +338,7 @@
 
     /* manager block */
     .mgr { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 48px; align-items: center; }
-    .mgr-visual { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow-md); overflow: hidden; }
+    .mgr-visual { background: var(--panel); border-radius: 18px; overflow: hidden; }
     .chat-head { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: var(--panel); border-bottom: 1px solid var(--line); }
     .chat-head .ava { position: relative; width: 42px; height: 42px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
     .chat-head .ava img { width: 100%; height: 100%; object-fit: cover; display: block; }
