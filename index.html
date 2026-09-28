@@ -27,7 +27,7 @@
 <meta name="twitter:image" content="https://dark13345.github.io/gift/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500..800&family=Roboto:wght@300..900&display=swap" rel="stylesheet">
 <style>
     :root {
         --bg: #ffffff;
@@ -63,14 +63,16 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; overflow-x: hidden; color-scheme: only light; }
     body {
-        font-family: 'Spline Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
         background: var(--bg);
         color: var(--ink);
         line-height: 1.55;
         -webkit-font-smoothing: antialiased;
         overflow-x: hidden;
     }
-    .mono { font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, 'Menlo', monospace; font-variant-numeric: tabular-nums; }
+    /* заголовки — Montserrat, обычный текст — Roboto */
+    h1, h2, h3, h4, .sec-head h2, .final h2 { font-family: 'Montserrat', 'Roboto', sans-serif; letter-spacing: -0.01em; }
+    .mono { font-family: 'Roboto', sans-serif; font-variant-numeric: tabular-nums; letter-spacing: 0; }
     .wrap { max-width: 1272px; margin: 0 auto; padding: 0 28px; }   /* контент 1216px — как на ru.npbmarkets.online */
     a { color: inherit; text-decoration: none; }
 
@@ -295,7 +297,7 @@
     /* how it works — process rail */
     .rail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .rail-step { background: var(--panel); border-radius: 14px; padding: 30px 26px; }
-    .rail-step .n { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--gold); margin-bottom: 18px; }
+    .rail-step .n { font-family: 'Roboto', sans-serif; font-weight: 700; font-size: 13px; color: var(--gold); margin-bottom: 18px; }
     .rail-step h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
     .rail-step p { font-size: 13.5px; color: var(--ink-dim); line-height: 1.55; }
 
@@ -462,10 +464,10 @@
 
     /* «С нами зарабатывают с 1996 года!» — как на goldentime.npbmarket-promoru.nl */
     .gt-trust { background: #fff; box-shadow: 0 0 0 100vmax #fff; clip-path: inset(0 -100vmax); padding: 56px 0 48px; color: #000; }
-    .gt-title { font-family: 'Montserrat', 'Spline Sans', sans-serif; font-weight: 800; font-size: 40px; line-height: 49px; text-align: center; letter-spacing: 0; margin: 0 auto 72px; max-width: 786px; }
+    .gt-title { font-family: 'Montserrat', 'Roboto', sans-serif; font-weight: 800; font-size: 40px; line-height: 49px; text-align: center; letter-spacing: 0; margin: 0 auto 72px; max-width: 786px; }
     /* сетка шире обычной колонки сайта — как у оригинала (1216px), колонки 447/377/392 */
     .gt-grid { display: grid; grid-template-columns: 447fr 377fr 392fr; row-gap: 88px; width: min(1216px, calc(100vw - 48px)); position: relative; left: 50%; transform: translateX(-50%); }
-    .gt-item { display: flex; flex-direction: column; align-items: flex-start; font-family: 'Roboto', 'Spline Sans', sans-serif; }
+    .gt-item { display: flex; flex-direction: column; align-items: flex-start; font-family: 'Roboto', sans-serif; }
     .gt-ic { height: auto; margin-bottom: 30px; }
     .gt-item h3 { font-family: inherit; font-weight: 700; font-size: 24px; line-height: 28px; letter-spacing: 0; margin: 0 0 16px; }
     .gt-item p { font-family: inherit; font-weight: 400; font-size: 18px; line-height: 24px; max-width: 347px; margin: 0; color: #000; }
@@ -489,7 +491,7 @@
 
     /* «Награды» — как на goldentime: две ленты-картинки едут туда-обратно за 120 с, при наведении стоят */
     .gt-awards { background: #fff; box-shadow: 0 0 0 100vmax #fff; clip-path: inset(0 -100vmax); padding: 28px 0 40px; }
-    .gt-aw-title { font-family: 'Montserrat', 'Spline Sans', sans-serif; font-weight: 800; font-size: 40px; line-height: 60px; letter-spacing: 0; color: #000; margin: 0 0 32px;
+    .gt-aw-title { font-family: 'Montserrat', 'Roboto', sans-serif; font-weight: 800; font-size: 40px; line-height: 60px; letter-spacing: 0; color: #000; margin: 0 0 32px;
                    width: min(1216px, calc(100vw - 48px)); position: relative; left: 50%; transform: translateX(-50%); }
     .gt-aw-strip { width: 100vw; position: relative; left: 50%; transform: translateX(-50%); overflow: hidden; }
     .gt-aw-track { display: flex; align-items: center; width: max-content; gap: 32px; padding-right: 32px; animation: gt-aw-move 120s linear .2s infinite; }
@@ -500,7 +502,7 @@
     @media (max-width: 600px) { .gt-awards { padding: 8px 0 24px; } .gt-aw-title { font-size: 30px; line-height: 40px; margin-bottom: 20px; } .gt-aw-track img { height: 180px; } }
 
     /* подвал — как на welcome500 */
-    .w5-foot { background: #fff; padding: 8px 0 35px; font-family: 'Roboto', 'Spline Sans', sans-serif; font-size: 14px; color: #6b7280; }
+    .w5-foot { background: #fff; padding: 8px 0 35px; font-family: 'Roboto', sans-serif; font-size: 14px; color: #6b7280; }
     .w5-in { width: min(1216px, calc(100% - 48px)); margin: 0 auto; }
     .w5-top { border-top: 1px solid rgba(119, 120, 122, .29); padding-top: 49px; display: flex; align-items: center; justify-content: space-between; }
     .w5-logo img { display: block; width: 136px; height: auto; }
