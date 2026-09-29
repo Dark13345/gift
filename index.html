@@ -89,11 +89,9 @@
     @media (prefers-reduced-motion: reduce) { .tape-track { animation: none; } }
 
     /* nav */
-    nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; margin-bottom: 8px; }
     .logo { display: inline-flex; align-items: center; }
     .brand-logo { height: 30px; width: auto; display: block; }
-    .nav-link { font-size: 14px; color: var(--ink-dim); }
-    .nav-link:hover { color: var(--ink); }
 
     /* buttons */
     .btn {
@@ -553,6 +551,8 @@
         .rail-step h3, .tier .t-name, .mech-text h3, .faq-q { font-size: 20px; line-height: 26px; }
         .sec-head p, .lede-c, .rail-step p, .tier ul li, .mech-text p, .faq-a, .final p { font-size: 17px; line-height: 23px; }
     }
+    nav .btn.nav-btn { padding: 12px 24px; font-size: 14px; }
+    @media (max-width: 560px) { nav .btn.nav-btn { padding: 10px 16px; font-size: 13px; } }
 </style>
 </head>
 <body>
@@ -576,7 +576,7 @@
     <path d="M86.3726 19.2171V28.5714H79.9156V1.90479H90.3747C93.5467 1.90479 95.9637 2.69379 97.6255 4.27179C99.2873 5.84979 100.117 7.96826 100.116 10.6272C100.144 12.1766 99.7593 13.7057 99.0022 15.0582C98.2304 16.3828 97.0802 17.4468 95.6991 18.114C94.2394 18.8541 92.4647 19.2249 90.3747 19.2265L86.3726 19.2171ZM93.5475 10.6177C93.5475 8.27913 92.2506 7.10983 89.6568 7.10983H86.3726V14.0475H89.6568C92.249 14.0475 93.546 12.9043 93.5475 10.6177Z" fill="#009B7A"/>
     <path d="M123.69 17.1814C124.63 18.3431 125.133 19.797 125.112 21.2905C125.112 23.5786 124.35 25.3642 122.828 26.6471C121.305 27.93 119.121 28.5714 116.276 28.5714H103.855V1.90479H115.975C118.694 1.90479 120.795 2.49575 122.28 3.67767C123.765 4.85959 124.508 6.54411 124.508 8.73122C124.508 10.3408 124.08 11.6821 123.223 12.7551C122.378 13.8187 121.191 14.5585 119.863 14.8499C121.37 15.1625 122.722 15.9863 123.69 17.1814ZM110.312 12.8048H114.539C116.781 12.8048 117.901 11.8494 117.899 9.9384C117.897 8.02743 116.752 7.07195 114.463 7.07195H110.312V12.8048ZM118.503 20.3792C118.524 19.9581 118.45 19.5377 118.286 19.1493C118.122 18.7608 117.872 18.4142 117.555 18.1353C116.924 17.5957 116.03 17.325 114.876 17.3234H110.312V23.3285H114.923C117.311 23.3285 118.505 22.3478 118.503 20.3864V20.3792Z" fill="#009B7A"/>
     </svg></a>
-        <a href="#start" class="nav-link">Открыть счёт</a>
+        <a href="#start" class="btn nav-btn">Собрать портфель</a>
     </nav>
 
     <!-- HERO -->
