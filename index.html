@@ -266,6 +266,8 @@
     .yield-sub { font-size: 11.5px; color: var(--ink-faint); margin-top: 2px; }
     .yield-v { font-size: 22px; font-weight: 700; color: var(--up); white-space: nowrap; }
     .yield-v.empty { color: var(--ink-faint); font-size: 18px; }
+    .yield-v.down { color: var(--danger); }
+    .yield-row:has(.yield-v.down) { background: rgba(217, 45, 70, 0.08); border-color: rgba(217, 45, 70, 0.25); }
     /* diversification index */
     .divers-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 12px; padding: 12px 16px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 16px; }
     .divers-info { display: flex; flex-direction: column; gap: 8px; flex: 1; }
@@ -638,8 +640,8 @@
                 </div>
                 <div class="yield-row" id="yieldRow">
                     <div class="yield-info">
-                        <span class="yield-k">Ожидаемая доходность</span>
-                        <span class="yield-sub">по динамике бумаг</span>
+                        <span class="yield-k">Изменение за последний год</span>
+                        <span class="yield-sub">как менялась цена бумаг, это не прогноз</span>
                     </div>
                     <span class="yield-v mono" id="yieldVal">—</span>
                 </div>
@@ -1133,8 +1135,11 @@
     const elYieldVal = document.getElementById('yieldVal');
     const elDiversRow = document.getElementById('diversRow');
     const elDiversVal = document.getElementById('diversVal');
-    // ориентировочная годовая доходность по тикеру (маркетинговая оценка, не гарантия)
-    const ER = { AAPL:14, NVDA:28, TSLA:22, AMZN:16, GOOGL:15, NFLX:17, DIS:11, KO:8, V:12, WMT:10, PYPL:14, INTC:9, BABA:18, UBER:19, SBUX:10, NKE:11, MCD:9, JPM:12, BA:13, PEP:9, ADBE:16, CSCO:10 };
+    // на сколько изменилась цена бумаги за последний год: считаем по её же истории из prices.json
+    function yearChange(s) {
+        const a = s.series && s.series[0], b = s.series && s.series[s.series.length - 1];
+        return (a > 0 && b > 0) ? (b / a - 1) * 100 : 0;
+    }
 
     const elDiversStars = document.getElementById('diversStars');
     function setDivers(n) {
@@ -1173,10 +1178,12 @@
             elYieldVal.textContent = '—';
             elYieldVal.classList.add('empty');
         } else {
-            const wsum = chosen.reduce((a,s) => a + (ER[s.tk]||12) * s.price * state[s.tk], 0);
+            // средневзвешенное по стоимости позиций изменение цены за год
+            const wsum = chosen.reduce((a,s) => a + yearChange(s) * s.price * state[s.tk], 0);
             const avg = wsum / total;
-            elYieldVal.textContent = '≈ ' + avg.toFixed(1).replace('.', ',') + '% годовых';
+            elYieldVal.textContent = (avg >= 0 ? '+' : '−') + Math.abs(avg).toFixed(1).replace('.', ',') + '%';
             elYieldVal.classList.remove('empty');
+            elYieldVal.classList.toggle('down', avg < 0);
         }
         setDivers(inCount);
     }
