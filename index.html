@@ -523,6 +523,36 @@
         .w5-legal { padding-top: 56px; }
         .w5-bottom { flex-direction: column; align-items: flex-start; gap: 14px; }
     }
+
+    /* ===== Типографика как в блоке «С нами зарабатывают с 1996 года» (с корпсайта) =====
+       Заголовок блока: Montserrat 800, 40/49, чёрный
+       Заголовок карточки: Roboto 700, 24/28, чёрный
+       Текст: Roboto 400, 18/24, чёрный
+       Компактный интерфейс (конструктор акций, чат, бегущая строка, подвал) не трогаем:
+       там свои мелкие размеры, иначе всё разъедется. */
+    .sec-head h2, .final h2, .mech h2 {
+        font-family: 'Montserrat', 'Roboto', sans-serif; font-weight: 800;
+        font-size: 40px; line-height: 49px; letter-spacing: 0; color: #000;
+    }
+    .final h2 { color: #fff; }
+    .sec-head p, .lede-c {
+        font-family: 'Roboto', sans-serif; font-weight: 400;
+        font-size: 18px; line-height: 24px; color: #000;
+    }
+    .rail-step h3, .tier .t-name, .mech-text h3, .faq-q {
+        font-family: 'Roboto', sans-serif; font-weight: 700;
+        font-size: 24px; line-height: 28px; letter-spacing: 0; color: #000;
+    }
+    .rail-step p, .tier ul li, .mech-text p, .faq-a, .final p {
+        font-family: 'Roboto', sans-serif; font-weight: 400;
+        font-size: 18px; line-height: 24px; color: #000;
+    }
+    .final p { color: rgba(255, 255, 255, 0.92); }
+    @media (max-width: 860px) {
+        .sec-head h2, .final h2, .mech h2 { font-size: 30px; line-height: 38px; }
+        .rail-step h3, .tier .t-name, .mech-text h3, .faq-q { font-size: 20px; line-height: 26px; }
+        .sec-head p, .lede-c, .rail-step p, .tier ul li, .mech-text p, .faq-a, .final p { font-size: 17px; line-height: 23px; }
+    }
 </style>
 </head>
 <body>
