@@ -1,4 +1,4 @@
-"""Берёт с Yahoo Finance цены и графики за 40 дней по акциям конструктора и пишет prices.json.
+"""Берёт с Yahoo Finance цены и графики за 365 дней по акциям конструктора и пишет prices.json.
 
 Запускается GitHub по расписанию (.github/workflows/prices.yml). Сайт читает prices.json
 и обновляет карточки акций. Если Yahoo не ответил по какой-то бумаге, её старые данные
@@ -9,14 +9,14 @@ from datetime import datetime, timezone
 
 TICKERS = ['AAPL', 'NVDA', 'TSLA', 'AMZN', 'MSFT', 'GOOGL', 'NFLX', 'AMD', 'DIS', 'KO', 'V', 'WMT',
            'PYPL', 'INTC', 'BABA', 'UBER', 'SBUX', 'NKE', 'MCD', 'JPM', 'BA', 'PEP', 'ADBE', 'CSCO']
-DAYS = 40
+DAYS = 365
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'prices.json')
 UA = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128 Safari/537.36'}
 
 
 def fetch(tk):
     for host in ('query1', 'query2'):
-        url = f'https://{host}.finance.yahoo.com/v8/finance/chart/{tk}?range=3mo&interval=1d'
+        url = f'https://{host}.finance.yahoo.com/v8/finance/chart/{tk}?range=1y&interval=1d'
         try:
             with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=20) as r:
                 res = json.load(r)['chart']['result'][0]
