@@ -78,6 +78,7 @@
 
     /* ticker tape */
     .tape { border-bottom: 1px solid var(--line); background: var(--panel); overflow: hidden; white-space: nowrap; }
+    .tape:hover .tape-track { animation-play-state: paused; }
     .tape-track { display: inline-flex; gap: 34px; padding: 9px 0; animation: scroll 46s linear infinite; }
     .tape-item { font-size: 12.5px; letter-spacing: 0.02em; display: inline-flex; align-items: center; }
     .tape-logo { width: 16px; height: 16px; object-fit: contain; margin-right: 7px; flex: none; }
@@ -553,8 +554,8 @@
         .rail-step h3, .tier .t-name, .mech-text h3, .faq-q { font-size: 20px; line-height: 26px; }
         .sec-head p, .lede-c, .rail-step p, .tier ul li, .mech-text p, .faq-a, .final p { font-size: 17px; line-height: 23px; }
     }
-    nav .btn.nav-btn { padding: 12px 24px; font-size: 14px; }
-    @media (max-width: 560px) { nav .btn.nav-btn { padding: 10px 16px; font-size: 13px; } }
+    nav .btn.nav-btn { padding: 11px 26px; font-size: 15px; border-radius: 9999px; }
+    @media (max-width: 560px) { nav .btn.nav-btn { padding: 10px 18px; font-size: 13px; } }
 </style>
 </head>
 <body>
