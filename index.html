@@ -92,7 +92,7 @@
     /* nav */
     nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; margin-bottom: 8px; }
     .logo { display: inline-flex; align-items: center; }
-    .brand-logo { height: 30px; width: auto; display: block; }
+    .brand-logo { height: 40px; width: auto; display: block; }
 
     /* buttons */
     .btn {
@@ -110,7 +110,7 @@
     /* hero */
     .hero { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: 60px; align-items: center; padding: 66px 0 84px; }
     .kicker { font-size: 14px; color: var(--gold); margin-bottom: 20px; font-weight: 500; }
-    h1 { font-size: 42px; line-height: 1.12; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 22px; }
+    h1 { font-size: 40px; line-height: 50px; font-weight: 800; letter-spacing: 0; color: #000; margin-bottom: 16px; }
     .lede { font-size: 18px; color: var(--ink-dim); max-width: 460px; margin-bottom: 32px; }
     .hero-actions { display: flex; gap: 14px; align-items: center; }
     .hero-fine { font-size: 13px; color: var(--ink-faint); margin-top: 20px; }
@@ -132,7 +132,7 @@
         color: var(--gold); position: relative; white-space: nowrap;
         background: linear-gradient(180deg, #2fd6a8, var(--gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .lede-c { font-size: 18px; color: var(--ink-dim); margin: 20px 0 0; opacity: 0; animation: rise .6s ease .19s forwards; }
+    .lede-c { font-size: 18px; color: var(--ink-dim); margin: 16px 0 0; opacity: 0; animation: rise .6s ease .19s forwards; }
     .hero-cta { display: flex; align-items: center; gap: 22px; margin-top: 32px; flex-wrap: wrap; opacity: 0; animation: rise .6s ease .26s forwards; }
     .hero-btn { padding: 15px 32px; font-size: 16px; }
     .hero-proof { display: flex; align-items: center; gap: 12px; }
@@ -404,7 +404,7 @@
         .mgr { grid-template-columns: 1fr; gap: 30px; }
         .mgr-visual { order: 2; }
         h2 { font-size: 29px; }
-        h1 { font-size: 34px; }
+        h1 { font-size: 34px; line-height: 42px; }
 
         /* --- mobile portfolio builder: horizontal cards on top, drop below --- */
         .builder { padding-bottom: 24px; }
@@ -459,7 +459,7 @@
     }
     @media (max-width: 560px) {
         .wrap { padding: 0 18px; }
-        h1 { font-size: 29px; }
+        h1 { font-size: 29px; line-height: 36px; }
         .rail { grid-template-columns: 1fr; }
         .hero-actions { flex-direction: column; align-items: stretch; }
         .final { padding: 46px 22px; }
@@ -570,7 +570,7 @@
 
 <div class="wrap">
     <nav>
-        <a class="logo" href="#"><svg class="brand-logo" viewBox="0 0 126 40" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <a class="logo" href="#"><svg class="brand-logo" viewBox="0 0 126 40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M17.3559 23.4679C16.8175 23.1955 16.2229 23.0536 15.6199 23.0536C15.0168 23.0536 14.4222 23.1955 13.8838 23.4679L10.2309 25.585C9.2671 26.1385 8.49364 25.6841 8.49364 24.5796V10.4726C8.49364 9.36807 7.71295 8.91371 6.75877 9.46716L1.73487 12.3674C1.22976 12.698 0.809455 13.1435 0.508035 13.6675C0.206615 14.1915 0.0325653 14.7795 0 15.3836V29.4786C0.0338872 30.0824 0.208498 30.6698 0.5098 31.1936C0.811101 31.7175 1.2307 32.1631 1.73487 32.4948L13.9585 39.5858C14.4969 39.8582 15.0915 40 15.6946 40C16.2976 40 16.8922 39.8582 17.4306 39.5858L29.5651 32.5455C30.5289 31.9921 30.5289 31.0954 29.5651 30.5347L17.3559 23.4679Z" fill="#009B7A"/>
     <path d="M22.4495 16.5388C22.9879 16.8112 23.5825 16.953 24.1855 16.953C24.7886 16.953 25.3832 16.8112 25.9216 16.5388L29.5769 14.4241C30.5407 13.8706 31.3118 14.3225 31.3118 15.4295V29.5341C31.3118 30.641 32.0949 31.093 33.049 30.5395L38.0729 27.6393C38.5771 27.3076 38.9967 26.862 39.298 26.3382C39.5993 25.8143 39.7739 25.2269 39.8078 24.6231V10.5305C39.774 9.92609 39.5992 9.33805 39.2975 8.81375C38.9957 8.28945 38.5755 7.84353 38.0705 7.5119L25.8373 0.413652C25.2992 0.141673 24.705 0 24.1024 0C23.4998 0 22.9057 0.141673 22.3675 0.413652L10.2307 7.45148C9.26686 8.00493 9.26686 8.90158 10.2307 9.4647L22.4495 16.5388Z" fill="#F58426"/>
     <path d="M57.0471 32.5723V38.5226H56.4454V33.5243L54.3941 38.5226H53.8517L51.7909 33.5529V38.5226H51.1821V32.5723H51.8927L54.1241 37.7752L56.3412 32.5723H57.0471Z" fill="#009B7A"/>
