@@ -1,4 +1,8 @@
-"""Берёт с Yahoo Finance цены и графики за 365 дней по акциям конструктора и пишет prices.json.
+"""Берёт с Yahoo Finance цены и графики за год по акциям конструктора и пишет prices.json.
+
+Период везде один и тот же: мини-график, процент рядом с ценой и расчёт доходности
+в портфеле считаются по одному и тому же отрезку — один год. Точки берём недельные:
+на графике шириной 56 пикселей дневные всё равно не видно, а файл меньше в пять раз.
 
 Запускается GitHub по расписанию (.github/workflows/prices.yml). Сайт читает prices.json
 и обновляет карточки акций. Если Yahoo не ответил по какой-то бумаге, её старые данные
@@ -7,27 +11,28 @@
 import json, os, sys, time, urllib.request
 from datetime import datetime, timezone
 
-TICKERS = ['AAPL', 'NVDA', 'TSLA', 'AMZN', 'MSFT', 'GOOGL', 'NFLX', 'AMD', 'DIS', 'KO', 'V', 'WMT',
+TICKERS = ['AAPL', 'NVDA', 'TSLA', 'AMZN', 'GOOGL', 'NFLX', 'DIS', 'KO', 'V', 'WMT',
            'PYPL', 'INTC', 'BABA', 'UBER', 'SBUX', 'NKE', 'MCD', 'JPM', 'BA', 'PEP', 'ADBE', 'CSCO']
-DAYS = 365
+WEEKS = 52   # год недельными точками
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'prices.json')
 UA = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128 Safari/537.36'}
 
 
 def fetch(tk):
     for host in ('query1', 'query2'):
-        url = f'https://{host}.finance.yahoo.com/v8/finance/chart/{tk}?range=1y&interval=1d'
+        url = f'https://{host}.finance.yahoo.com/v8/finance/chart/{tk}?range=1y&interval=1wk'
         try:
             with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=20) as r:
                 res = json.load(r)['chart']['result'][0]
             closes = [c for c in res['indicators']['quote'][0]['close'] if c is not None]
             price = res['meta']['regularMarketPrice']
             closes[-1] = price
-            prev = closes[-2]
+            closes = closes[-(WEEKS + 1):]
             return {
                 'price': round(price, 2),
-                'chg': round((price / prev - 1) * 100, 1),
-                'series': [round(c, 2) for c in closes[-DAYS:]],
+                # изменение цены за весь показанный период, а не за сутки
+                'chg': round((price / closes[0] - 1) * 100, 1),
+                'series': [round(c, 2) for c in closes],
             }
         except Exception as e:
             err = e
