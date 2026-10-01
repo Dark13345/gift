@@ -173,7 +173,9 @@
     .budget-bar { height: 6px; border-radius: 4px; background: var(--line); overflow: hidden; margin-bottom: 16px; }
     .budget-bar i { display: block; height: 100%; background: var(--gold); border-radius: 4px; transition: width .25s ease; }
 
-    .stock-list { display: flex; flex-direction: column; gap: 10px; max-height: 434px; overflow-y: auto; padding: 4px 6px 4px 4px; }
+    .stock-list { display: flex; flex-direction: column; gap: 10px; max-height: 434px; overflow-y: auto; padding: 4px 6px 4px 4px;
+        border: 1.5px dashed transparent; border-radius: 16px; transition: border-color .18s, background .18s; }
+    .stock-list.over { border-color: var(--gold); background: var(--gold-soft); }
     .stock-list::-webkit-scrollbar { width: 7px; }
     .stock-list::-webkit-scrollbar-track { background: transparent; }
     .stock-list::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
@@ -216,8 +218,11 @@
         width: 260px; background: var(--panel); border: 1px solid var(--gold); border-radius: 16px;
         box-shadow: var(--shadow-lg); padding: 11px 14px;
         display: grid; grid-template-columns: 38px 1fr auto; gap: 12px; align-items: center;
+        left: 0; top: 0; will-change: transform;
         transform: translate(-40px, -26px) rotate(-6deg);
     }
+    /* тянем из портфеля наружу — призрак краснеет, видно что акция уедет */
+    .drag-ghost.removing { border-color: #e5484d; }
     .drag-ghost .g-logo { width: 34px; height: 34px; border-radius: 8px; background: var(--panel-2); border: 1px solid var(--line-soft); display: grid; place-items: center; overflow: hidden; }
     .drag-ghost .g-logo img { width: 22px; height: 22px; object-fit: contain; }
     .drag-ghost .g-tk { font-size: 14px; font-weight: 600; }
@@ -366,7 +371,7 @@
     .chat-input .field { flex: 1; background: var(--panel-2); border: 1px solid var(--line); border-radius: 20px; padding: 9px 15px; font-size: 13.5px; color: var(--ink-faint); }
     .chat-input .send { width: 36px; height: 36px; border-radius: 50%; background: var(--gold); color: #fff; display: grid; place-items: center; flex-shrink: 0; }
     .mgr h2 { margin-bottom: 16px; }
-    .mgr p { font-size: 16px; color: var(--ink-dim); margin-bottom: 16px; }
+    .mgr p { margin-bottom: 16px; }
 
     /* faq */
     .faq { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line-soft); }
@@ -531,7 +536,7 @@
        Текст: Roboto 400, 18/24, чёрный
        Компактный интерфейс (конструктор акций, чат, бегущая строка, подвал) не трогаем:
        там свои мелкие размеры, иначе всё разъедется. */
-    .sec-head h2, .final h2, .mech h2 {
+    .sec-head h2, .final h2, .mech h2, .mgr h2 {
         font-family: 'Montserrat', 'Roboto', sans-serif; font-weight: 800;
         font-size: 40px; line-height: 49px; letter-spacing: 0; color: #000;
     }
@@ -544,15 +549,15 @@
         font-family: 'Roboto', sans-serif; font-weight: 700;
         font-size: 24px; line-height: 28px; letter-spacing: 0; color: #000;
     }
-    .rail-step p, .tier ul li, .mech-text p, .faq-a, .final p {
+    .rail-step p, .tier ul li, .mech-text p, .faq-a, .final p, .mgr p {
         font-family: 'Roboto', sans-serif; font-weight: 400;
         font-size: 18px; line-height: 24px; color: #000;
     }
     .final p { color: rgba(255, 255, 255, 0.92); }
     @media (max-width: 860px) {
-        .sec-head h2, .final h2, .mech h2 { font-size: 30px; line-height: 38px; }
+        .sec-head h2, .final h2, .mech h2, .mgr h2 { font-size: 30px; line-height: 38px; }
         .rail-step h3, .tier .t-name, .mech-text h3, .faq-q { font-size: 20px; line-height: 26px; }
-        .sec-head p, .lede-c, .rail-step p, .tier ul li, .mech-text p, .faq-a, .final p { font-size: 17px; line-height: 23px; }
+        .sec-head p, .lede-c, .rail-step p, .tier ul li, .mech-text p, .faq-a, .final p, .mgr p { font-size: 17px; line-height: 23px; }
     }
     nav .btn.nav-btn { padding: 11px 26px; font-size: 15px; border-radius: 9999px; }
     @media (max-width: 560px) { nav .btn.nav-btn { padding: 10px 18px; font-size: 13px; } }
@@ -1042,23 +1047,40 @@
             // --- touch drag (мобилка): нативный DnD не работает пальцем ---
             card.addEventListener('pointerdown', e => {
                 if (e.target.closest('.q-btn')) return;   // мышь и палец ведём одинаково
-                let started = false, moved = false;
+                if (e.button) return;                     // только левая кнопка
+                let started = false;
                 const startX = e.clientX, startY = e.clientY;
+                let lastX = startX, lastY = startY, frame = 0, zone = null, rooms = null;
+
+                // всю работу делаем раз в кадр: иначе на каждое микродвижение мыши
+                // браузер пересчитывает страницу и карточка тащится с задержкой
+                const paint = () => {
+                    frame = 0;
+                    moveGhost(lastX, lastY);
+                    const inZone = lastX >= zone.left && lastX <= zone.right && lastY >= zone.top && lastY <= zone.bottom;
+                    if (inPortfolio) {
+                        // тянем из портфеля: подсвечиваем левую колонку, куда вернётся акция
+                        elAvail.classList.toggle('over', !inZone);
+                        if (ghostEl) ghostEl.classList.toggle('removing', !inZone);
+                    } else {
+                        elPort.classList.toggle('over', inZone);
+                        if (inZone) makeRoomAt(lastY, rooms); else clearMakeRoom();
+                    }
+                };
+
                 const onMove = ev => {
-                    const dx = ev.clientX - startX, dy = ev.clientY - startY;
-                    if (!started && Math.hypot(dx, dy) > 8) {
-                        started = true; moved = true;
+                    lastX = ev.clientX; lastY = ev.clientY;
+                    if (!started && Math.hypot(lastX - startX, lastY - startY) > 8) {
+                        started = true;
                         dragTk = s.tk; card.classList.add('dragging');
-                        showGhost(s, ev.clientX, ev.clientY);
+                        showGhost(s, lastX, lastY);
                         document.body.style.userSelect = 'none';
+                        zone = elPort.getBoundingClientRect();
+                        rooms = inPortfolio ? null : roomCache();
                     }
                     if (started) {
                         ev.preventDefault();
-                        moveGhost(ev.clientX, ev.clientY);
-                        const over = elPort.getBoundingClientRect();
-                        const inZone = ev.clientX >= over.left && ev.clientX <= over.right && ev.clientY >= over.top && ev.clientY <= over.bottom;
-                        elPort.classList.toggle('over', inZone);
-                        if (inZone) makeRoomAt(ev.clientY); else clearMakeRoom();
+                        if (!frame) frame = requestAnimationFrame(paint);
                     }
                 };
                 const onUp = ev => {
@@ -1067,10 +1089,15 @@
                     card.removeEventListener('pointercancel', onUp);
                     document.body.style.userSelect = '';
                     if (started) {
-                        const over = elPort.getBoundingClientRect();
-                        const inZone = ev.clientX >= over.left && ev.clientX <= over.right && ev.clientY >= over.top && ev.clientY <= over.bottom;
-                        card.classList.remove('dragging'); elPort.classList.remove('over'); clearMakeRoom(); hideGhost(); dragTk = null;
-                        if (inZone) toggle(s.tk, true);
+                        if (frame) { cancelAnimationFrame(frame); frame = 0; }
+                        const x = ev.clientX, y = ev.clientY;
+                        const inZone = x >= zone.left && x <= zone.right && y >= zone.top && y <= zone.bottom;
+                        card.classList.remove('dragging');
+                        elPort.classList.remove('over'); elAvail.classList.remove('over');
+                        clearMakeRoom(); hideGhost(); dragTk = null;
+                        // в портфель — добавляем, из портфеля наружу — убираем
+                        if (inZone && !inPortfolio) toggle(s.tk, true);
+                        else if (!inZone && inPortfolio) toggle(s.tk, false);
                     }
                     // если не двигали — сработает обычный click (добавит)
                 };
@@ -1212,9 +1239,8 @@
         moveGhost(x, y);
     }
     function moveGhost(x, y) {
-        if (!ghostEl || (!x && !y)) return;
-        ghostEl.style.left = x + 'px';
-        ghostEl.style.top = y + 'px';
+        if (!ghostEl) return;
+        ghostEl.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0) translate(-40px,-26px) rotate(-6deg)';
     }
     function hideGhost() { if (ghostEl) { ghostEl.remove(); ghostEl = null; } }
 
@@ -1222,14 +1248,20 @@
     function clearMakeRoom() {
         elPort.querySelectorAll('.stock.shift-down').forEach(n => n.classList.remove('shift-down'));
     }
-    function makeRoomAt(y) {
-        const cards = [...elPort.querySelectorAll('.stock')];
+    // координаты карточек снимаем один раз в начале перетаскивания: замерять их
+    // на каждое движение мыши — браузер пересчитывает всю страницу, карточка отстаёт
+    function roomCache() {
+        return [...elPort.querySelectorAll('.stock')].map(c => {
+            const r = c.getBoundingClientRect();
+            return { el: c, mid: r.top + r.height / 2 };
+        });
+    }
+    function makeRoomAt(y, cache) {
+        const cards = cache || roomCache();
         let shifted = false;
         cards.forEach(c => {
-            const r = c.getBoundingClientRect();
-            if (!shifted && y < r.top + r.height/2) { c.classList.add('shift-down'); shifted = true; }
-            else if (shifted) { c.classList.add('shift-down'); }
-            else { c.classList.remove('shift-down'); }
+            if (!shifted && y < c.mid) shifted = true;
+            c.el.classList.toggle('shift-down', shifted);
         });
     }
 
