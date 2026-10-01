@@ -317,6 +317,8 @@
 
     /* tiers */
     .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    /* у блока тарифов воздуха больше, чем у остальных секций — по просьбе заказчика */
+    .sec-tiers { padding-top: 88px; padding-bottom: 88px; }
     .tier { background: var(--panel); border-radius: 32px; padding: 30px 26px; position: relative; transition: transform .15s, box-shadow .15s; }
     .tier:hover { transform: translateY(-3px); }
     .tier.feat { background: linear-gradient(180deg, var(--gold-soft), transparent 60%), var(--panel); }
@@ -414,6 +416,7 @@
         .hero-img { max-width: 340px; margin: 0 auto; }
         .rail { grid-template-columns: 1fr 1fr; }
         .tiers { grid-template-columns: 1fr; }
+        .sec-tiers { padding-top: 56px; padding-bottom: 56px; }
         .mech { grid-template-columns: 1fr; gap: 30px; padding: 32px 24px; }
         .mgr { grid-template-columns: 1fr; gap: 30px; }
         .mgr-visual { order: 2; }
@@ -726,7 +729,7 @@
 
 <!-- TIERS -->
 <div class="wrap">
-    <section>
+    <section class="sec-tiers">
         <div class="sec-head">
             <h2>Выберите, с чего начать</h2>
         </div>
