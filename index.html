@@ -303,7 +303,13 @@
     /* how it works — process rail */
     .rail { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .rail-step { background: var(--panel); border-radius: 32px; padding: 30px 26px; }
-    .rail-step .n { font-family: 'Roboto', sans-serif; font-weight: 700; font-size: 13px; color: var(--gold); margin-bottom: 18px; }
+    .rail-step .n { width: 64px; height: 64px; margin-bottom: 18px; }
+    .rail-step .n svg { display: block; width: 64px; height: 64px; }
+    .ring-track { fill: none; stroke: #e9e9e9; stroke-width: 6; }
+    .ring-arc { fill: none; stroke: var(--gold); stroke-width: 6; stroke-linecap: round;
+        transform: rotate(-90deg); transform-origin: 32px 32px; }
+    .ring-num { fill: var(--gold); font-family: 'Roboto', sans-serif; font-weight: 700; font-size: 24px;
+        text-anchor: middle; dominant-baseline: central; }
     .rail-step h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
     .rail-step p { font-size: 13.5px; color: var(--ink-dim); line-height: 1.55; }
 
@@ -683,19 +689,19 @@
         </div>
         <div class="rail">
             <div class="rail-step">
-                <div class="n">01</div>
+                <div class="n"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="ring-track" cx="32" cy="32" r="29"/><circle class="ring-arc" cx="32" cy="32" r="29" stroke-dasharray="45.6 182.2"/><text class="ring-num" x="32" y="33">1</text></svg></div>
                 <h3>Регистрация</h3>
-                <p>Откройте Личный кабинет и получите полный доступ к сервисам брокерской компании NPB Markets.</p>
+                <p>Откройте Личный кабинет и получите полный доступ к сервисам брокерской компании NPB Markets</p>
             </div>
             <div class="rail-step">
-                <div class="n">02</div>
+                <div class="n"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="ring-track" cx="32" cy="32" r="29"/><circle class="ring-arc" cx="32" cy="32" r="29" stroke-dasharray="136.7 182.2"/><text class="ring-num" x="32" y="33">2</text></svg></div>
                 <h3>Откройте счёт Invest Start</h3>
-                <p>В Личном кабинете в разделе «Промоакции» откройте лимитированный торговый счёт INVEST START.</p>
+                <p>В Личном кабинете в разделе «Промоакции» откройте лимитированный торговый счёт INVEST START</p>
             </div>
             <div class="rail-step">
-                <div class="n">03</div>
+                <div class="n"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="ring-track" cx="32" cy="32" r="29"/><circle class="ring-arc" cx="32" cy="32" r="29"/><text class="ring-num" x="32" y="33">3</text></svg></div>
                 <h3>Получите акции</h3>
-                <p>С вами свяжется менеджер, поможет подобрать акции и открыть позиции.</p>
+                <p>С вами свяжется менеджер, поможет подобрать акции и открыть позиции</p>
             </div>
         </div>
     </section>
@@ -808,7 +814,7 @@
             <div>
                 <h2>Акции выбираете вы — менеджер помогает не ошибиться</h2>
                 <p>Состав портфеля не случайный. Вы сами решаете, какие компании вам интересны, а менеджер подсказывает наиболее перспективные бумаги и открывает позиции на вашем счёте.</p>
-                <p>Дальше он остаётся на связи и помогает управлять портфелем — когда докупить, когда зафиксировать прибыль, как пересобрать состав под рынок.</p>
+                <p>Дальше он остаётся на связи и помогает управлять портфелем — когда докупить, когда зафиксировать прибыль, как пересобрать состав под рынок</p>
                 <a href="#start" class="btn">Получить портфель</a>
             </div>
         </div>
@@ -860,7 +866,7 @@
     <section>
         <div class="final">
             <h2>Соберите стартовый портфель сегодня</h2>
-            <p>Оставьте заявку — менеджер свяжется с вами и откроет позиции на $1&nbsp;500 в подарок.</p>
+            <p>Оставьте заявку — менеджер свяжется с вами и откроет позиции на $1&nbsp;500 в подарок</p>
             <a href="#start" class="btn">Получить портфель</a>
         </div>
     </section>
